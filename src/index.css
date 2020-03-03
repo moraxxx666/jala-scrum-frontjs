@@ -1,0 +1,37 @@
+body{
+  background:#0d47a1;
+  color: white;
+}
+input{
+  color:white
+}
+label{
+  color: white;
+}
+
+.center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+ 
+}
+
+ .input-field input:focus + label {
+  color: white !important;
+}
+
+.input-field input:focus {
+  border-bottom: 1px solid white !important;
+  box-shadow: 0 1px 0 0 white !important;
+}
+
+.input-field input + label {
+  color: white !important;
+}
+
+.checkbox-blue-grey[type="checkbox"].filled-in + span:not(.lever):after 
+{
+    border: 2px solid blue !important;  
+    background-color: blue !important;
+}
