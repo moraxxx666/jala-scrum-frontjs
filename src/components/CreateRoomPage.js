@@ -1,40 +1,68 @@
 import React, { Component } from 'react'
 import M from "materialize-css"
-import IO from "socket.io-client"
-export default class CreateRoomPage extends Component {
+import { withRouter } from "react-router-dom";
+import socket , { CreateRoom } from "../Socket/Socket"
+class CreateRoomPage extends Component {
+
     constructor(props) {
         super(props)
         this.state = {
+
             story: "",
             description: "",
             private: false,
-            password: '',
-            server: null
+            password: ''
+
         }
         this.HandlerPrivate = this.HandlerPrivate.bind(this)
-        this.btn = this.btn.bind(this)
+        this.CreateRoom = this.CreateRoom.bind(this)
         this.Handler = this.Handler.bind(this)
     }
     componentDidMount() {
-        this.state.server = IO('http://localhost:4000')
-        this.state.server.on('saludo', (as) => {
-            M.toast({html:as})
+        socket.on('Room Created',(room)=>{
+            localStorage.setItem("data",room._id)
+            this.props.history.push(`/Room/${room._id}`)
         })
+
     }
+
     HandlerPrivate(e) {
         this.setState({
             private: !this.state.private,
             password: ""
         })
     }
-    Handler(e){
+    Handler(e) {
         this.setState({
-           story : e.target.value
+            [e.target.name]: e.target.value
         })
     }
-    btn(e) {
+    CreateRoom(e) {
         e.preventDefault()
-        this.state.server.emit("boton",this.state.story)
+        if (this.state.private === true) {
+            if (this.state.password) {
+                let obj = {
+                    story: this.state.story,
+                    description: this.state.description,
+                    private: this.state.private,
+                    password: this.state.password
+                }
+                CreateRoom(obj)
+                
+            } else {
+                M.toast({ html: "Password is required" })
+            }
+        } else {
+            let obj = {
+                story: this.state.story,
+                description: this.state.description,
+                private: this.state.private,
+                password: this.state.password
+            }
+            CreateRoom(obj)
+
+        }
+
     }
     render() {
         return (
@@ -51,7 +79,7 @@ export default class CreateRoomPage extends Component {
                                 <label htmlFor="story">Story (*)</label>
                             </div>
                             <div className="input-field col s12">
-                                <input id="description" type="text" name="description" className="white-text" onChange={this.handler} />
+                                <input id="description" type="text" name="description" className="white-text" onChange={this.Handler} />
                                 <label htmlFor="description">Description (*)</label>
                             </div>
                             <div className="col s12">
@@ -63,11 +91,11 @@ export default class CreateRoomPage extends Component {
                             </label>
                             {
                                 this.state.private === true ? <div className="input-field col s12">
-                                    <input id="password" type="password" name="password" className="white-text" onChange={this.handler} />
+                                    <input id="password" type="password" name="password" className="white-text" onChange={this.Handler} />
                                     <label htmlFor="password">Password</label>
                                 </div> : null
                             }
-                            <button className="btn blue" onClick={this.btn}>apretame</button>
+                            <button className="btn blue" onClick={this.CreateRoom}>Create Room</button>
 
 
 
@@ -80,3 +108,4 @@ export default class CreateRoomPage extends Component {
         )
     }
 }
+export default withRouter(CreateRoomPage)
