@@ -12,6 +12,8 @@ import NavBar from "./components/NavBar"
 import IndexPage from "./components/IndexPage"
 import CreateRoomPage from "./components/CreateRoomPage"
 import RoomManteinerPage from "./components/RoomManteinerPage"
+import JoinRoomPage from "./components/JoinRoomPage";
+import RoomVoterPage from "./components/RoomVoterPage"
 
 function App() {
   return (
@@ -28,11 +30,15 @@ function App() {
           </Route>
           <Route path="/Join-Room" exact>
             <NavBar />
-            <h2>hola 2 </h2>
+            <JoinRoomPage/>
           </Route>
           <Route path="/Room/:RoomID" exact>
             <NavBar />
             <RoomManteinerPage />
+          </Route>
+          <Route path="/Vote/:RoomID" exact>
+            <NavBar />
+            <RoomVoterPage/>
           </Route>
           <Route path="*">
             <Redirect to="/" />
