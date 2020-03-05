@@ -7,25 +7,34 @@ class RoomVoterPage extends Component {
     super(props);
     this.state = {
       cards: [],
-      selectedVote: null
+      selectedVote: null,
+      voted: false
     };
     this.SelectCard = this.SelectCard.bind(this);
   }
   async SelectCard(e) {
-    await this.setState({
-      selectedVote: parseInt(e)
-    });
-    await socket.Vote(
-      {
-        name: this.state.name,
-        vote: this.state.selectedVote
-      },
-      this.state._id
-    );
+    if (this.state.voted === false) {
+      await this.setState({
+        selectedVote: parseInt(e),
+        voted: true
+      });
+      await socket.Vote(
+        {
+          name: this.state.name,
+          vote: this.state.selectedVote
+        },
+        this.state._id,
+        this.state.name
+      );
+    } else {
+      M.toast({ html: "You have already voted" })
+    }
+
   }
   componentWillUnmount() {
     let id = this.props.match.params.RoomID;
     socket.UserLeftRoom(id);
+    localStorage.clear()
   }
   componentDidMount() {
     let id = this.props.match.params.RoomID;
@@ -63,11 +72,12 @@ class RoomVoterPage extends Component {
     socket.ResetedRoom(msg => {
       M.toast({ html: msg });
       this.setState({
-        selectedVote: null
+        selectedVote: null,
+        voted: false
       });
     });
-    socket.Voted((msg)=>{
-        M.toast({html:msg})
+    socket.Voted((msg) => {
+      M.toast({ html: msg })
     })
   }
   render() {
@@ -80,8 +90,11 @@ class RoomVoterPage extends Component {
             </h5>
             <h5 className="center-align">Story : {this.state.story}</h5>
             <h5 className="center-align">
-              Description: {this.state.description}
+              Description:
             </h5>
+            <pre style={{ fontFamily: "Arial" }}>
+              {this.state.description}
+            </pre>
           </div>
           <div className="col s12">
             <div className="row cardContainer">

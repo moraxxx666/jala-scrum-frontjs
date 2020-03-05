@@ -22,10 +22,10 @@ class Socket {
     this.socket.emit("Connect Into a Room", id);
   }
   RoomOK(callback) {
-    this.socket.on("Room OK", room => callback(room));
+    this.socket.on("OK", room => callback(room));
   }
   RoomBAD(callback) {
-    this.socket.on("Room BAD", message => callback(message));
+    this.socket.on("BAD", message => callback(message));
   }
   UserJoinRoom(callback) {
     this.socket.on("UserJoinRoom", io => {
@@ -52,9 +52,9 @@ class Socket {
           callback(msg,room)
       })
   }
-  Vote(vote,id){
+  Vote(vote,id,name){
       
-      this.socket.emit("Vote",vote,id)
+      this.socket.emit("Vote",vote,id,name)
   }
   Voted(callback){
     this.socket.on("Voted",(msg)=>{

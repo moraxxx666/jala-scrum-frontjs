@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import M from "materialize-css"
 import { withRouter } from "react-router-dom";
-import socket  from "../Socket/Socket"
+import socket from "../Socket/Socket"
 class CreateRoomPage extends Component {
 
     constructor(props) {
@@ -10,26 +10,19 @@ class CreateRoomPage extends Component {
 
             story: "",
             description: "",
-            private: false,
-            password: '',
             name: ''
 
         }
-        this.HandlerPrivate = this.HandlerPrivate.bind(this)
-        this.CreateRoom = this.CreateRoom.bind(this)
         this.Handler = this.Handler.bind(this)
+        this.CreateRoom = this.CreateRoom.bind(this)
+
     }
     componentDidMount() {
-        socket.RoomCreated(room=>this.props.history.push(`/Room/${room._id}`))
-       
+        socket.RoomCreated(room => this.props.history.push(`/Room/${room._id}`))
+
     }
 
-    HandlerPrivate(e) {
-        this.setState({
-            private: !this.state.private,
-            password: ""
-        })
-    }
+
     Handler(e) {
         this.setState({
             [e.target.name]: e.target.value
@@ -45,9 +38,9 @@ class CreateRoomPage extends Component {
                     private: this.state.private,
                     password: this.state.password
                 }
-                localStorage.setItem("name",this.state.name)
-                socket.CreateRoom(obj,this.state.name)
-                
+                localStorage.setItem("name", this.state.name)
+                socket.CreateRoom(obj, this.state.name)
+
             } else {
                 M.toast({ html: "Password is required" })
             }
@@ -58,8 +51,8 @@ class CreateRoomPage extends Component {
                 private: this.state.private,
                 password: this.state.password
             }
-            localStorage.setItem("name",this.state.name)
-            socket.CreateRoom(obj,this.state.name)
+            localStorage.setItem("name", this.state.name)
+            socket.CreateRoom(obj, this.state.name)
 
         }
 
@@ -74,7 +67,7 @@ class CreateRoomPage extends Component {
                     </div>
                     <div className="col s12">
                         <form className="row">
-                        <div className="input-field col s12">
+                            <div className="input-field col s12">
                                 <input id="name" type="text" name="name" className="white-text" onChange={this.Handler} />
                                 <label htmlFor="name">Name Manteiner</label>
                             </div>
@@ -83,25 +76,14 @@ class CreateRoomPage extends Component {
                                 <label htmlFor="story">Story (*)</label>
                             </div>
                             <div className="input-field col s12">
-                                <input id="description" type="text" name="description" className="white-text" onChange={this.Handler} />
+                                <textarea id="description" name="description" class="materialize-textarea white-text" onChange={this.Handler}></textarea>
                                 <label htmlFor="description">Description (*)</label>
                             </div>
                             <div className="col s12">
-                                <h4>Configuration</h4>
+
+                                <button className="btn blue" onClick={this.CreateRoom}>Create Room</button>
+
                             </div>
-                            <label className="input-field col s12">
-                                <input type="checkbox" className="filled-in checkbox-blue-grey" onChange={this.HandlerPrivate} />
-                                <span>Private?</span>
-                            </label>
-                            {
-                                this.state.private === true ? <div className="input-field col s12">
-                                    <input id="password" type="password" name="password" className="white-text" onChange={this.Handler} />
-                                    <label htmlFor="password">Password</label>
-                                </div> : null
-                            }
-                            <button className="btn blue" onClick={this.CreateRoom}>Create Room</button>
-
-
 
                         </form>
                     </div>

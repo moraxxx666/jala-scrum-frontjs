@@ -18,17 +18,15 @@ class RoomManteinerPage extends Component {
     this.FinishRoom = this.FinishRoom.bind(this);
     this.Resetroom = this.Resetroom.bind(this);
   }
-  componentWillUnmount() {
-    let id = this.props.match.params.RoomID;
-    socket.UserLeftRoom(id);
-  }
+
 
   componentDidMount() {
     let id = this.props.match.params.RoomID;
     socket.ConnectIntoaRoom(id);
-    socket.RoomOK(room => {
+    socket.RoomOK(async room => {
+      console.log(room)
       if (room.active) {
-        this.setState(room);
+        await this.setState(room);
       } else {
         M.toast({ html: "Room is closed" });
         this.props.history.push("/Join-Room");
@@ -47,11 +45,11 @@ class RoomManteinerPage extends Component {
       M.toast({ html: msg });
       this.props.history.push("/");
     });
-    socket.ResetedRoom((msg,room) => {
+    socket.ResetedRoom((msg, room) => {
       M.toast({ html: msg });
       this.setState(room)
     });
-    socket.RefreshVotes((room)=>{
+    socket.RefreshVotes((room) => {
       this.setState(room)
     })
   }
@@ -59,7 +57,7 @@ class RoomManteinerPage extends Component {
     socket.CloseRoom(this.state._id);
   }
   Resetroom() {
-    
+
     socket.ResetRoom(this.state._id);
   }
   render() {
@@ -71,9 +69,10 @@ class RoomManteinerPage extends Component {
               <div className="col s12">
                 <h6 className="center-align">ROOM ID: {this.state._id} </h6>
                 <h6 className="center-align">STORY : {this.state.story} </h6>
-                <h6 className="center-align">
-                  DESCRIPTION : {this.state.description}{" "}
-                </h6>
+                <h6 className="center-align"> DESCRIPTION : </h6> 
+                <pre style={{fontFamily:"Arial"}}>
+                  {this.state.description}
+                </pre>
                 <h6 className="center-align">
                   Users Connected to the Room : {this.state.usersConnected}
                 </h6>
@@ -95,7 +94,7 @@ class RoomManteinerPage extends Component {
             <div className="row ">
               {this.state.votes.map((vote, index) => {
                 return (
-                  <div className="cardVote col s2" key={index}>
+                  <div className="cardVote col m2 s6" key={index}>
                     <h1 className=" center-align vote">{vote.vote}</h1>
                     <h6 className="center-align">{vote.name}</h6>
                   </div>

@@ -16,11 +16,11 @@ label {
   height: 100vh;
 }
 
-.input-field input:focus + label {
+.input-field input:focus,textarea + label {
   color: white !important;
 }
 
-.input-field input:focus {
+.input-field input:focus,textarea:focus {
   border-bottom: 1px solid white !important;
   box-shadow: 0 1px 0 0 white !important;
 }
@@ -36,7 +36,7 @@ label {
 
 .medio {
  
-  margin-top: 10px;
+  margin-top:  5px;
   border-top: 1px solid white;
   
 }
@@ -44,7 +44,7 @@ label {
   padding: 15px;
 }
 .derecha {
-  margin-top: 10px;
+  margin-top: 5px;
   border-top: 1px solid white;
 }
 .btn{
@@ -66,4 +66,11 @@ label {
 }
 .cardContainer{
   padding: 15px;
+}
+pre{
+  word-break: break-all;
+  word-wrap: break-word;
+  height: 350px;
+  overflow: auto;
+  padding: 10px;
 }
