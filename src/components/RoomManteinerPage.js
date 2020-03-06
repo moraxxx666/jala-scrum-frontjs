@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import { ScrumContext2 } from "../Context/ScrumContext";
+
 import socket from "../Socket/Socket";
 import M from "materialize-css";
 class RoomManteinerPage extends Component {
-  static contextType = ScrumContext2;
+  
   constructor(props) {
     super(props);
     this.state = {

@@ -6,7 +6,7 @@ class Socket {
     this.socket = io("http://localhost:4000");
   }
   CreateRoom(obj, name) {
-    this.socket.emit("Create Room", obj, name);
+    this.socket.emit("CreateRoom", obj, name);
   }
   ReceibeMessage() {
     this.socket.on("Message", message => {
@@ -14,12 +14,12 @@ class Socket {
     });
   }
   RoomCreated(callback) {
-    this.socket.on("Room Created", room => {
+    this.socket.on("RoomCreated", room => {
       callback(room);
     });
   }
   ConnectIntoaRoom(id) {
-    this.socket.emit("Connect Into a Room", id);
+    this.socket.emit("ConnectIntoRoom", id);
   }
   RoomOK(callback) {
     this.socket.on("OK", room => callback(room));

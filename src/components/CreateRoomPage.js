@@ -21,7 +21,9 @@ class CreateRoomPage extends Component {
         socket.RoomCreated(room => this.props.history.push(`/Room/${room._id}`))
 
     }
+    compo(){
 
+    }
 
     Handler(e) {
         this.setState({
@@ -30,21 +32,7 @@ class CreateRoomPage extends Component {
     }
     CreateRoom(e) {
         e.preventDefault()
-        if (this.state.private === true) {
-            if (this.state.password) {
-                let obj = {
-                    story: this.state.story,
-                    description: this.state.description,
-                    private: this.state.private,
-                    password: this.state.password
-                }
-                localStorage.setItem("name", this.state.name)
-                socket.CreateRoom(obj, this.state.name)
-
-            } else {
-                M.toast({ html: "Password is required" })
-            }
-        } else {
+        if(this.state.story && this.state.description && this.state.name){
             let obj = {
                 story: this.state.story,
                 description: this.state.description,
@@ -53,8 +41,13 @@ class CreateRoomPage extends Component {
             }
             localStorage.setItem("name", this.state.name)
             socket.CreateRoom(obj, this.state.name)
-
+        }else {
+            M.toast({html: "All fields are required"})
+            localStorage.clear()
         }
+        
+
+
 
     }
     render() {
@@ -76,7 +69,7 @@ class CreateRoomPage extends Component {
                                 <label htmlFor="story">Story (*)</label>
                             </div>
                             <div className="input-field col s12">
-                                <textarea id="description" name="description" class="materialize-textarea white-text" onChange={this.Handler}></textarea>
+                                <textarea id="description" name="description" className="materialize-textarea white-text" onChange={this.Handler}></textarea>
                                 <label htmlFor="description">Description (*)</label>
                             </div>
                             <div className="col s12">
