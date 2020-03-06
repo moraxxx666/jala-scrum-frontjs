@@ -1,30 +1,29 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-
-import M from "materialize-css";
-class JoinRoomPage extends Component {
-  constructor(props){
-    super(props)
-    this.state={
+import M from "materialize-css"
+class JoinTrelloRoomPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       roomID: null,
       name: null
-    }
-    this.Handler = this.Handler.bind(this)
-    this.JoinRoom = this.JoinRoom.bind(this)
+    };
+    this.Handler = this.Handler.bind(this);
+    this.JoinRoom = this.JoinRoom.bind(this);
   }
-  Handler(e){
+  Handler(e) {
     this.setState({
-      [e.target.name] : e.target.value
-    })
+      [e.target.name]: e.target.value
+    });
   }
-  JoinRoom(e){
-    e.preventDefault()
-    if(this.state.roomID && this.state.name){
-      localStorage.setItem("name",this.state.name)
-      this.props.history.push(`/Vote/${this.state.roomID}`)
-    }else{
-      M.toast({html:"All fields are required"})
-      localStorage.clear()
+  JoinRoom(e) {
+    e.preventDefault();
+    if (this.state.roomID && this.state.name) {
+      localStorage.setItem("name", this.state.name);
+      this.props.history.push(`/Vote-Trello/${this.state.roomID}`);
+    } else {
+      M.toast({ html: "All fields are required" });
+      localStorage.clear();
     }
   }
   render() {
@@ -32,7 +31,7 @@ class JoinRoomPage extends Component {
       <main className="center">
         <div className="row">
           <div className="col s12">
-            <h4 className="center-align">JOIN A LOCAL ROOM</h4>
+            <h4 className="center-align">JOIN TRELLO ROOM</h4>
           </div>
           <div className="col s12">
             <form className="row">
@@ -66,4 +65,4 @@ class JoinRoomPage extends Component {
     );
   }
 }
-export default withRouter(JoinRoomPage);
+export default withRouter(JoinTrelloRoomPage);

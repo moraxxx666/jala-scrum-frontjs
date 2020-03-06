@@ -66,6 +66,47 @@ class Socket {
           callback(room)
       })
   }
+  // Trello events
+  GetBoards(){
+    this.socket.emit("GetBoards")
+  }
+  ReturnBoards(callback){
+    this.socket.on("ReturnBoards",(boards)=>{
+      callback(boards)
+    })
+  }
+  GetListFromBoard(IDBoard){
+    this.socket.emit("GetListFromBoard",IDBoard)
+  }
+  ReturnList(callback){
+    this.socket.on("ReturnList",list=>{
+      callback(list)
+    })
+  }
+  JoinRoomTrello(IDList){
+    this.socket.emit("JoinRoomTrello",IDList)
+  }
+  JoinedRoom(callback){
+    this.socket.on("JoinedRoom",(room)=>{
+      callback(room)
+    })
+  }
+  VoterJoinRoomTrello(id){
+    this.socket.emit("VoterJoinRoomTrello",id)
+  }
+  NewUserTrello(storie,id,cards){
+    this.socket.on("NewUserTrello",()=>{
+      this.socket.emit("RefreshStorie",storie,id,cards)
+    })
+  }
+  RefreshStorie(storie,id,cards){
+    this.socket.emit("RefreshStorie",storie,id,cards)
+  }
+  RefreshedStorie(callback){
+    this.socket.on("RefreshedStorie",(stori,cards)=>{
+      callback(stori,cards)
+    })
+  }
 }
 
 const socket = new Socket();
