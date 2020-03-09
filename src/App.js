@@ -12,6 +12,8 @@ import CreateRoomPage from "./components/CreateRoomPage"
 import RoomManteinerPage from "./components/RoomManteinerPage"
 import JoinRoomPage from "./components/JoinRoomPage";
 import RoomVoterPage from "./components/RoomVoterPage"
+import RoomReviewPage from "./components/RoomReviewPage"
+import ReviewPage from "./components/ReviewPage"
 // TRELLO PAGES
 import CreateRoomTrelloPage from "./components/CreateRoomTrelloPage"
 import TrelloBoardPage from "./components/TrelloBoardPage"
@@ -34,6 +36,14 @@ function App() {
         <Route path="/Join-Room" exact>
           <NavBar />
           <JoinRoomPage />
+        </Route>
+        <Route path="/Room-Review" exact>
+          <NavBar />
+          <RoomReviewPage />
+        </Route>
+        <Route path="/Review/:RoomID" exact>
+          <NavBar />
+          <ReviewPage />
         </Route>
         <Route path="/Room/:RoomID" exact>
           <NavBar />

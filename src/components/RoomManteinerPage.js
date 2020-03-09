@@ -4,7 +4,6 @@ import { withRouter } from "react-router-dom";
 import socket from "../Socket/Socket";
 import M from "materialize-css";
 class RoomManteinerPage extends Component {
-  
   constructor(props) {
     super(props);
     this.state = {
@@ -13,7 +12,9 @@ class RoomManteinerPage extends Component {
       active: true,
       story: "",
       description: "",
-      usersConnected: 0
+      usersConnected: 0,
+      cards: [],
+      createdBy: ""
     };
     this.FinishRoom = this.FinishRoom.bind(this);
     this.Resetroom = this.Resetroom.bind(this);
@@ -24,7 +25,6 @@ class RoomManteinerPage extends Component {
     let id = this.props.match.params.RoomID;
     socket.ConnectIntoaRoom(id);
     socket.RoomOK(async room => {
-      console.log(room)
       if (room.active) {
         await this.setState(room);
       } else {
@@ -47,17 +47,16 @@ class RoomManteinerPage extends Component {
     });
     socket.ResetedRoom((msg, room) => {
       M.toast({ html: msg });
-      this.setState(room)
+      this.setState(room);
     });
-    socket.RefreshVotes((room) => {
-      this.setState(room)
-    })
+    socket.RefreshVotes(room => {
+      this.setState(room);
+    });
   }
   FinishRoom() {
     socket.CloseRoom(this.state._id);
   }
   Resetroom() {
-
     socket.ResetRoom(this.state._id);
   }
   render() {
@@ -69,13 +68,13 @@ class RoomManteinerPage extends Component {
               <div className="col s12">
                 <h6 className="center-align">ROOM ID: {this.state._id} </h6>
                 <h6 className="center-align">STORY : {this.state.story} </h6>
-                <h6 className="center-align"> DESCRIPTION : </h6> 
-                <pre style={{fontFamily:"Arial"}}>
-                  {this.state.description}
-                </pre>
                 <h6 className="center-align">
                   Users Connected to the Room : {this.state.usersConnected}
                 </h6>
+                <h6 className="center-align"> DESCRIPTION : </h6>
+                <pre style={{ fontFamily: "Arial" }}>
+                  {this.state.description}
+                </pre>
               </div>
               <div className="col s12 m6">
                 <button className="btn red " onClick={this.FinishRoom}>

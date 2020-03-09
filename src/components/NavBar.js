@@ -4,7 +4,7 @@ import M from "materialize-css"
 export default class NavBar extends Component {
     componentDidMount() {
         let dropdowns = document.querySelectorAll('.dropdown-trigger')
-        var instances = M.Dropdown.init(dropdowns, { coverTrigger: false });
+         M.Dropdown.init(dropdowns, { coverTrigger: false });
         M.Sidenav.init(document.querySelectorAll('.sidenav'), {});
     }
     render() {
@@ -18,7 +18,7 @@ export default class NavBar extends Component {
                         <ul className="right hide-on-med-and-down">
 
                             <li><Link className="dropdown-trigger" to="#!" id="dr" data-target="dropdown1">Local Room<i className="material-icons right">arrow_drop_down</i></Link></li>
-                            <li><Link className="dropdown-trigger" to="#!" id="dr" data-target="dropdown3">Import Room<i className="material-icons right">arrow_drop_down</i></Link></li>
+                            <li><Link className="dropdown-trigger" to="#!" id="dr" data-target="dropdown3">Trello Room<i className="material-icons right">arrow_drop_down</i></Link></li>
 
                         </ul>
                     </div>
@@ -26,17 +26,19 @@ export default class NavBar extends Component {
 
                 <ul className="sidenav" id="mobile-demo">
                     <li><Link className="dropdown-trigger" to="#!" id="dr" data-target="dropdown2">Local Room<i className="material-icons right">arrow_drop_down</i></Link></li>
-                    <li><Link className="dropdown-trigger" to="#!" id="dr" data-target="dropdown4">Import Room<i className="material-icons right">arrow_drop_down</i></Link></li>
+                    <li><Link className="dropdown-trigger" to="#!" id="dr" data-target="dropdown4">Trello Room<i className="material-icons right">arrow_drop_down</i></Link></li>
                 </ul>
 
                 <ul id="dropdown1" className="dropdown-content">
                     <li><Link to="/Create-Room">Create</Link></li>
                     <li><Link to="/Join-Room">Join</Link></li>
+                    <li><Link to="/Room-Review">Room Review</Link></li>
 
                 </ul>
                 <ul id="dropdown2" className="dropdown-content">
                     <li><Link to="/Create-Room">Create</Link></li>
                     <li><Link to="/Join-Room">Join</Link></li>
+                    <li><Link to="/Room-Review">Room Review</Link></li>
 
                 </ul>
                 <ul id="dropdown3" className="dropdown-content">

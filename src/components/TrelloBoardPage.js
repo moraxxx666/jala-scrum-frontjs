@@ -22,7 +22,7 @@ class TrelloBoardPage extends Component {
       <main className="center container">
         <div className="row">
           <div className="col s12">
-            <h3 className="center-align">Choose a Board from Trello</h3>
+            <h3 className="center-align">Choose a List of the Board </h3>
           </div>
           {this.state.list.map((list, index) => {
             return (

@@ -44,67 +44,105 @@ class Socket {
     });
   }
   ResetRoom(id) {
-      console.log(id)
+    console.log(id);
     this.socket.emit("ResetRoom", id);
   }
-  ResetedRoom(callback){
-      this.socket.on("ResetedRoom",(msg,room)=>{
-          callback(msg,room)
-      })
+  ResetedRoom(callback) {
+    this.socket.on("ResetedRoom", (msg, room) => {
+      callback(msg, room);
+    });
   }
-  Vote(vote,id,name){
-      
-      this.socket.emit("Vote",vote,id,name)
+  Vote(vote, id, name) {
+    this.socket.emit("Vote", vote, id, name);
   }
-  Voted(callback){
-    this.socket.on("Voted",(msg)=>{
-        callback(msg)
-    })
+  Voted(callback) {
+    this.socket.on("Voted", msg => {
+      callback(msg);
+    });
   }
-  RefreshVotes(callback){
-      this.socket.on("RefreshVotes",(room)=>{
-          callback(room)
-      })
+  RefreshVotes(callback) {
+    this.socket.on("RefreshVotes", room => {
+      callback(room);
+    });
   }
   // Trello events
-  GetBoards(){
-    this.socket.emit("GetBoards")
+  GetBoards() {
+    this.socket.emit("GetBoards");
   }
-  ReturnBoards(callback){
-    this.socket.on("ReturnBoards",(boards)=>{
-      callback(boards)
-    })
+  ReturnBoards(callback) {
+    this.socket.on("ReturnBoards", boards => {
+      callback(boards);
+    });
   }
-  GetListFromBoard(IDBoard){
-    this.socket.emit("GetListFromBoard",IDBoard)
+  GetListFromBoard(IDBoard) {
+    this.socket.emit("GetListFromBoard", IDBoard);
   }
-  ReturnList(callback){
-    this.socket.on("ReturnList",list=>{
-      callback(list)
-    })
+  ReturnList(callback) {
+    this.socket.on("ReturnList", list => {
+      callback(list);
+    });
   }
-  JoinRoomTrello(IDList){
-    this.socket.emit("JoinRoomTrello",IDList)
+  JoinRoomTrello(IDList) {
+    this.socket.emit("JoinRoomTrello", IDList);
   }
-  JoinedRoom(callback){
-    this.socket.on("JoinedRoom",(room)=>{
+  JoinedRoom(callback) {
+    this.socket.on("JoinedRoom", room => {
+      callback(room);
+    });
+  }
+  UserConnected(callback) {
+    this.socket.on("UserConnected", users => {
+      callback(users);
+    });
+  }
+  UserDisconnected(IDList) {
+    this.socket.emit("UserDisconnected", IDList);
+  }
+  Disconnected(callback) {
+    this.socket.on("UD", num => {
+      callback(num);
+    });
+  }
+  ChangeStorie(storie, IDList) {
+    this.socket.emit("ChangeStorie", storie, IDList);
+  }
+  StorieChanged(callback) {
+    this.socket.on("StorieChanged", room => {
+      callback(room);
+    });
+  }
+  TrelloVote(IDList, IDcard, name, val) {
+    this.socket.emit("NewVote", IDList, IDcard, name, val);
+  }
+  NewVote(callback) {
+    this.socket.on("Voted", room => {
+      callback(room);
+    });
+  }
+  DuplicatedVote(callback) {
+    this.socket.on("DuplicateVote", msg => {
+      callback(msg);
+    });
+  }
+  ResetVotes(IDList, IDcard) {
+    this.socket.emit("ResetVotes", IDList, IDcard);
+  }
+  VotesReseted(callback) {
+    this.socket.on("VotesReseted", room => {
+      callback(room);
+    });
+  }
+  NoRoom(callback) {
+    this.socket.on("NoRoom", msg => {
+      callback(msg);
+    });
+  }
+  ReviewRoom(RoomID) {
+    this.socket.emit("ReviewRoom", RoomID);
+  }
+  RoomReviewed(callback){
+    this.socket.on("RoomReviewed",(room)=>{
       callback(room)
-    })
-  }
-  VoterJoinRoomTrello(id){
-    this.socket.emit("VoterJoinRoomTrello",id)
-  }
-  NewUserTrello(storie,id,cards){
-    this.socket.on("NewUserTrello",()=>{
-      this.socket.emit("RefreshStorie",storie,id,cards)
-    })
-  }
-  RefreshStorie(storie,id,cards){
-    this.socket.emit("RefreshStorie",storie,id,cards)
-  }
-  RefreshedStorie(callback){
-    this.socket.on("RefreshedStorie",(stori,cards)=>{
-      callback(stori,cards)
     })
   }
 }

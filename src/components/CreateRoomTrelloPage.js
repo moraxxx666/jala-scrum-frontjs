@@ -30,8 +30,12 @@ class CreateRoomTrelloPage extends Component {
                 style={{ border: "1px solid white" }}
                 key={index}
               >
-                <Link className="center-align white-text" to={`/Trello-Board/${board.IDBoard}`}>
+                <Link
+                  className="center-align white-text"
+                  to={`/Trello-Board/${board.IDBoard}`}
+                >
                   <h4>{board.name}</h4>
+                  <p className="center-align">{board.description}</p>
                 </Link>
               </div>
             );
